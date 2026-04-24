@@ -6,8 +6,29 @@ menu = [
 
 
 def add_dish():
+        print("\n--- Додавання нової страви ---")
+        name = input("Введіть назву страви: ")
 
-    pass
+        try:
+            price = float(input("Введіть ціну: "))
+            if price < 0:
+                print("Помилка: ціна не може бути від'ємною!")
+                return
+        except ValueError:
+            print("Помилка: введіть числове значення!")
+            return
+
+        description = input("Введіть опис: ")
+        category = input("Введіть категорію: ")
+
+        new_dish = {
+            "name": name,
+            "price": price,
+            "description": description,
+            "category": category
+        }
+        menu.append(new_dish)
+        print(f"Страву '{name}' успішно додано!")
 
 
 def edit_dish():
@@ -38,7 +59,6 @@ def delete_dish():
     elif sub_choice == "2":
         cat_to_delete = input("Введіть категорію для видалення всіх її страв: ").strip()
         initial_len = len(menu)
-        # Видаляємо всі страви вказаної категорії
         menu[:] = [dish for dish in menu if dish.get('category', '').lower() != cat_to_delete.lower()]
 
         deleted_count = initial_len - len(menu)
@@ -47,15 +67,26 @@ def delete_dish():
         else:
             print(f" В категорії '{cat_to_delete}' страв не знайдено.")
 
-    # Підрахунок кількості страв (обов'язкова умова завдання В)
+
     print(f"📊 Поточна кількість страв у меню: {len(menu)}")
 
 
 
 
 def show_menu():
+        print("\n" + "=" * 30)
+        print("      МЕНЮ РЕСТОРАНУ")
+        print("=" * 30)
 
-    pass
+        if not menu:
+            print("Меню наразі порожнє.")
+        else:
+            for item in menu:
+                print(f"🍴 СТРАВА: {item['name']}")
+                print(f"💰 ЦІНА:   {item['price']} грн")
+                print(f"📂 КАТ:    {item['category']}")
+                print(f"📝 ОПИС:   {item['description']}")
+                print("-" * 30)
 
 
 def calculate_total():
